@@ -1,0 +1,48 @@
+<web-app xmlns="http://java.sun.com/xml/ns/javaee"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
+      version="3.0">
+      
+  <display-name>Realex Payments Transaction Monitor Server</display-name>
+
+    <context-param>
+		<param-name>contextConfigLocation</param-name>
+		<param-value>/WEB-INF/applicationContext.xml</param-value>
+	</context-param>
+
+    <listener>
+		<listener-class>
+			org.springframework.web.context.ContextLoaderListener
+		</listener-class>
+	</listener>
+ 
+    	
+  <servlet>
+    <servlet-name>payb.in</servlet-name>
+    <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+  </servlet>
+
+  
+	<servlet>
+ 		<servlet-name>Transaction Monitor Server</servlet-name>
+ 		<servlet-class>com.sun.jersey.spi.spring.container.servlet.SpringServlet</servlet-class>
+		<init-param>
+			<param-name>com.sun.jersey.config.property.packages</param-name>
+			<param-value>com.rxp.transactionmonitorserver.resource</param-value>
+		</init-param>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+ 
+  
+	
+  <servlet-mapping>
+    <servlet-name>payb.in</servlet-name>
+    <url-pattern>/paybin/*</url-pattern>
+  </servlet-mapping>
+  
+
+  <servlet-mapping>
+    <servlet-name>Transaction Monitor Server</servlet-name>
+    <url-pattern>/tms/*</url-pattern>
+  </servlet-mapping>
+</web-app>
