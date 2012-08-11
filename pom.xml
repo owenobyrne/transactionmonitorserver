@@ -60,7 +60,7 @@
 <dependency>
         <groupId>org.oauth4j</groupId>
         <artifactId>oauth4j</artifactId>
-        <version>0.1.6.2-PA</version>
+        <version>0.1.6.2-OOB</version>
 </dependency>
 <dependency>
         <groupId>com.sun.jersey.contribs.jersey-oauth</groupId>

@@ -14,6 +14,7 @@
   <div id="content">
 
       The access token is <c:out value="${access_token.token}"/> and the secret is <c:out value="${access_token.tokenSecret}"/>
+      The JSON returned was <c:out value="${json}"/>
   </div>
 
 
