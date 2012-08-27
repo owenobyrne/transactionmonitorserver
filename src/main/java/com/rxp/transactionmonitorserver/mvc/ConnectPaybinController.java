@@ -24,17 +24,14 @@ public class ConnectPaybinController {
 	OAuth4jServiceProvider paybinOAuth4jServiceProvider;
 	
 	@RequestMapping(method = RequestMethod.GET)
-	protected ModelAndView connectPaybin(HttpServletRequest request, HttpServletResponse response) throws Exception {
+	protected void connectPaybin(HttpServletRequest request, HttpServletResponse response) throws Exception {
 	    System.out.println("In connect...");
 		
-	    String url = paybinOAuth4jServiceProvider.getOAuth4jService().getAuthenticationURL(CALLBACKURL);
+	    String url = paybinOAuth4jServiceProvider.getAuthenticationURL(CALLBACKURL);
 		System.out.println("Got url " + url);
 		
-		TreeMap<String, Object> model = new TreeMap<String, Object>();
-	    
-		model.put("authorize_url", url);
-		
-	    return new ModelAndView("connect_paybin", model);
+		response.sendRedirect(url);
+	
 	  }
 
 	

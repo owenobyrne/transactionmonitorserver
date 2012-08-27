@@ -26,7 +26,7 @@ public class VerifyPaybinController {
 	OAuth4jServiceProvider paybinOAuth4jServiceProvider;
 	
 	@RequestMapping(method = RequestMethod.GET)
-	protected ModelAndView connectPaybin(HttpServletRequest request, HttpServletResponse response) throws Exception {
+	protected void connectPaybin(HttpServletRequest request, HttpServletResponse response) throws Exception {
 	    System.out.println("In verify...");
 		
 	    String token = request.getParameter("oauth_token");
@@ -36,25 +36,14 @@ public class VerifyPaybinController {
 	      throw new IllegalArgumentException("An oauth token and verifier must be provided.");
 	    }
 	    	
-		paybinOAuth4jServiceProvider.getOAuth4jService().setVerifier(verifier);
-		OAuth4JToken access_token = paybinOAuth4jServiceProvider.getOAuth4jService().fetchAccessToken();
+		OAuth4JToken access_token = paybinOAuth4jServiceProvider.fetchAccessToken(verifier);
 		System.out.println("Got token " + access_token.toString());
 
-		OAuth4JRequest transactionsRequest = paybinOAuth4jServiceProvider.getOAuth4jService().createRequest(PaybinServiceProviderService.TRANSACTIONS, null);
-
-		ClientResponse res = paybinOAuth4jServiceProvider.getOAuth4jService().process(transactionsRequest);
-
-		String json = res.getEntity(String.class);
-
-
-		
-		TreeMap<String, Object> model = new TreeMap<String, Object>();
-	    
-		model.put("json", json);
-		model.put("access_token", access_token);
-		
-	    return new ModelAndView("verify_paybin", model);
-	  }
+		if (access_token != null) {
+			response.sendRedirect("home");
+		}
+		// TODO what about the case if it is null?
+	}
 
 	
 
