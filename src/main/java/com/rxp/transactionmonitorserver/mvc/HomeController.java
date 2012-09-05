@@ -1,6 +1,5 @@
 package com.rxp.transactionmonitorserver.mvc;
 
-import java.util.List;
 import java.util.TreeMap;
 
 import javax.servlet.http.HttpServletRequest;
@@ -16,9 +15,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.rxp.transactionmonitorserver.OAuth4jServiceProvider;
 import com.rxp.transactionmonitorserver.PaybinServiceProviderService;
-import com.rxp.transactionmonitorserver.model.Transaction;
 import com.sun.jersey.api.client.ClientResponse;
-import com.sun.jersey.api.client.GenericType;
 
 @Controller
 @RequestMapping("/home")
@@ -37,14 +34,21 @@ public class HomeController {
 	    	response.sendRedirect("connect");
 	    	
 	    } else {
+	    	OAuth4JRequest credentialsRequest = paybinOAuth4jServiceProvider.getOAuth4jService().createRequest(PaybinServiceProviderService.CREDENTIALS, null);
+			ClientResponse res = paybinOAuth4jServiceProvider.getOAuth4jService().process(credentialsRequest);
+
+			String credentialsBlob = res.getEntity(String.class);
+			System.out.println(credentialsBlob);
+
+/*	    	
 	    	OAuth4JRequest transactionsRequest = paybinOAuth4jServiceProvider.getOAuth4jService().createRequest(PaybinServiceProviderService.TRANSACTIONS, null);
 			ClientResponse res = paybinOAuth4jServiceProvider.getOAuth4jService().process(transactionsRequest);
 
 			List<Transaction> transactions = res.getEntity(new GenericType<List<Transaction>>() {});
-
+*/	
 			TreeMap<String, Object> model = new TreeMap<String, Object>();
-			model.put("transactions", transactions);
-			
+	//		model.put("transactions", transactions);
+		
 		    return new ModelAndView("home", model);
 	
 	    }

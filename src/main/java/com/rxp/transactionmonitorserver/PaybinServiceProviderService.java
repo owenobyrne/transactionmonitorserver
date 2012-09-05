@@ -20,8 +20,13 @@ public enum PaybinServiceProviderService implements OAuth4JServiceProviderServic
      * selected transaction http://payb.in/v1/transaction/{guid}/{orderid}
      */
     TRANSACTION(Protocol.HTTP, Method.GET,
-            "http://payb.in/v1/transaction/{0}/{1}", Transaction.class, 2);
-
+            "http://payb.in/v1/transaction/{0}/{1}", Transaction.class, 2),
+    
+    /**
+     * Retrieve and encrypted blob of credentials.
+     * http://payb.in/v1/credentials
+     */
+    CREDENTIALS(Protocol.HTTP, Method.GET, "http://payb.in/v1/credentials", String.class);
     
     private Protocol protocol;
     private Method method;
